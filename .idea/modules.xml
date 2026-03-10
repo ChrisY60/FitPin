@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/FitPin.iml" filepath="$PROJECT_DIR$/.idea/FitPin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FitPinServer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/FitPinServer.main.iml" />
     </modules>
   </component>
 </project>
