@@ -29,6 +29,11 @@ public class User {
     @Column()
     private String bio;
 
+    @Setter
+    @Getter
+    @Column(nullable = false)
+    private String passwordHash;
+
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
     @Getter
     private List<Post> posts = new ArrayList<>();
@@ -41,13 +46,15 @@ public class User {
     @Getter
     private List<PostLike> postLikes = new ArrayList<>();
 
+
     public User() {
     }
 
-    public User(String username, String emailAddress, String bio) {
+    public User(String username, String emailAddress, String bio, String passwordHash) {
         this.username = username;
         this.emailAddress = emailAddress;
         this.bio = bio;
+        this.passwordHash = passwordHash;
     }
 
     public void addPost(Post post){
