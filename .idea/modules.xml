@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/FitPin.iml" filepath="$PROJECT_DIR$/.idea/FitPin.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/FitPinServer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/FitPinServer.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FitPinServer.test.iml" filepath="$PROJECT_DIR$/.idea/modules/FitPinServer.test.iml" />
     </modules>
   </component>
 </project>
