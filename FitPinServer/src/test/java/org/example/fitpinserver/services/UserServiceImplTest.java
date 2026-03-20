@@ -1,7 +1,8 @@
 package org.example.fitpinserver.services;
 
-import org.example.fitpinserver.entities.User;
-import org.example.fitpinserver.repositories.UserRepository;
+import org.example.fitpinserver.businessLayer.serviceImplementations.UserServiceImpl;
+import org.example.fitpinserver.domainLayer.entities.User;
+import org.example.fitpinserver.dataAccessLayer.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

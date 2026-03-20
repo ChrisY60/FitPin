@@ -1,17 +1,15 @@
-package org.example.fitpinserver.controllers;
+package org.example.fitpinserver.presentationLayer.controllers;
 
-import org.example.fitpinserver.dtos.RegisterUserRequestDTO;
-import org.example.fitpinserver.dtos.RegisterUserResponseDTO;
-import org.example.fitpinserver.entities.User;
-import org.example.fitpinserver.mappers.UserMapper;
-import org.example.fitpinserver.services.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.example.fitpinserver.presentationLayer.dtos.RegisterUserRequestDTO;
+import org.example.fitpinserver.presentationLayer.dtos.RegisterUserResponseDTO;
+import org.example.fitpinserver.domainLayer.entities.User;
+import org.example.fitpinserver.businessLayer.mappers.UserMapper;
+import org.example.fitpinserver.businessLayer.services.UserService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;

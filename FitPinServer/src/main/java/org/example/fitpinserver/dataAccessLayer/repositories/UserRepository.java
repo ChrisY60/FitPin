@@ -1,6 +1,6 @@
-package org.example.fitpinserver.repositories;
+package org.example.fitpinserver.dataAccessLayer.repositories;
 
-import org.example.fitpinserver.entities.User;
+import org.example.fitpinserver.domainLayer.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

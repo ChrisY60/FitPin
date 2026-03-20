@@ -1,12 +1,10 @@
-package org.example.fitpinserver.entities;
+package org.example.fitpinserver.domainLayer.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Time;
 import java.time.Instant;
-import java.util.Date;
 
 @Entity
 public class Comment {

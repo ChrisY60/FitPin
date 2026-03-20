@@ -1,4 +1,4 @@
-package org.example.fitpinserver.entities;
+package org.example.fitpinserver.domainLayer.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;

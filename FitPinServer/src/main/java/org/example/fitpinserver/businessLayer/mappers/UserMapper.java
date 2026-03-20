@@ -1,8 +1,8 @@
-package org.example.fitpinserver.mappers;
+package org.example.fitpinserver.businessLayer.mappers;
 
-import org.example.fitpinserver.dtos.RegisterUserRequestDTO;
-import org.example.fitpinserver.dtos.RegisterUserResponseDTO;
-import org.example.fitpinserver.entities.User;
+import org.example.fitpinserver.presentationLayer.dtos.RegisterUserRequestDTO;
+import org.example.fitpinserver.presentationLayer.dtos.RegisterUserResponseDTO;
+import org.example.fitpinserver.domainLayer.entities.User;
 import org.springframework.stereotype.Component;
 
 @Component
