@@ -1,15 +1,14 @@
-package org.example.fitpinserver.entities;
+package org.example.fitpinserver.DAL.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Time;
 import java.time.Instant;
-import java.util.Date;
 
 @Entity
-public class Comment {
+@Table(name = "comments")
+public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -29,18 +28,18 @@ public class Comment {
     @JoinColumn(name = "author_id", nullable = false)
     @Getter
     @Setter
-    private User author;
+    private UserEntity author;
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     @Getter
     @Setter
-    private Post post;
+    private PostEntity post;
 
-    public Comment() {
+    public CommentEntity() {
     }
 
-    public Comment(String content, User author, Instant timestamp, Post post) {
+    public CommentEntity(String content, UserEntity author, Instant timestamp, PostEntity post) {
         this.content = content;
         this.author = author;
         this.timestamp = timestamp;

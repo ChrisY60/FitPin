@@ -1,20 +1,18 @@
-package org.example.fitpinserver.services;
-
-import org.example.fitpinserver.dtos.RegisterUserRequestDTO;
-import org.example.fitpinserver.dtos.RegisterUserResponseDTO;
-import org.example.fitpinserver.entities.User;
-import org.example.fitpinserver.mappers.UserMapper;
-import org.example.fitpinserver.repositories.UserRepository;
+package org.example.fitpinserver.business.serviceImplementations;
+import org.example.fitpinserver.DAL.repositories.UserJPARepository;
+import org.example.fitpinserver.DAL.repositories.UserRepositoryImpl;
+import org.example.fitpinserver.business.services.UserService;
+import org.example.fitpinserver.DAL.entities.UserEntity;
+import org.example.fitpinserver.domain.UserRepository;
+import org.example.fitpinserver.domain.models.User;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
     }
 
 

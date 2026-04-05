@@ -1,4 +1,4 @@
-package org.example.fitpinserver.entities;
+package org.example.fitpinserver.DAL.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Product {
+@Table(name = "products")
+public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -23,22 +24,22 @@ public class Product {
     @JoinColumn(name = "brand_id")
     @Getter
     @Setter
-    private Brand brand;
+    private BrandEntity brand;
 
     @ManyToMany(mappedBy = "products")
     @Getter
-    private List<Post> posts = new ArrayList<>();
+    private List<PostEntity> posts = new ArrayList<>();
 
-    public Product() {
+    public ProductEntity() {
     }
 
-    public Product(String name, Brand brand) {
+    public ProductEntity(String name, BrandEntity brand) {
         this.name = name;
         this.brand = brand;
     }
 
     public void removeFromAllPosts() {
-        for (Post post : new ArrayList<>(posts)) {
+        for (PostEntity post : new ArrayList<>(posts)) {
             post.removeProduct(this);
         }
     }

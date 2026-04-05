@@ -1,7 +1,6 @@
-package org.example.fitpinserver.dtos;
+package org.example.fitpinserver.presentation.dtos;
 
 import lombok.Getter;
-import lombok.Setter;
 
 public class RegisterUserResponseDTO {
     @Getter

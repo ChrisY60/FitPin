@@ -1,12 +1,13 @@
-package org.example.fitpinserver.mappers;
+package org.example.fitpinserver.presentation.mappers;
 
-import org.example.fitpinserver.dtos.RegisterUserRequestDTO;
-import org.example.fitpinserver.dtos.RegisterUserResponseDTO;
-import org.example.fitpinserver.entities.User;
+import org.example.fitpinserver.domain.models.User;
+import org.example.fitpinserver.presentation.dtos.RegisterUserRequestDTO;
+import org.example.fitpinserver.presentation.dtos.RegisterUserResponseDTO;
+import org.example.fitpinserver.DAL.entities.UserEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserMapper {
+public class UserPresentationMapper {
     public RegisterUserResponseDTO toRegisterUserResponseDTO (User user){
         return new RegisterUserResponseDTO(user.getId(), user.getUsername(), user.getEmailAddress());
     }
