@@ -1,4 +1,4 @@
-package org.example.fitpinserver.presentationLayer.dtos;
+package org.example.fitpinserver.presentation.dtos;
 
 import lombok.Getter;
 import lombok.Setter;

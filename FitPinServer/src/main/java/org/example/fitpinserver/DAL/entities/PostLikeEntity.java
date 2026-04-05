@@ -1,4 +1,4 @@
-package org.example.fitpinserver.domainLayer.entities;
+package org.example.fitpinserver.DAL.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -6,9 +6,9 @@ import lombok.Setter;
 
 import java.time.Instant;
 
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "post_id"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "post_id"}), name = "post_likes")
 @Entity
-public class Save {
+public class PostLikeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -23,18 +23,18 @@ public class Save {
     @JoinColumn(name = "user_id", nullable = false)
     @Getter
     @Setter
-    private User user;
+    private UserEntity user;
 
     @ManyToOne
+    @JoinColumn(name = "post_id", nullable = false)
     @Getter
     @Setter
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+    private PostEntity post;
 
-    public Save() {
+    public PostLikeEntity() {
     }
 
-    public Save(Instant timestamp, User user, Post post) {
+    public PostLikeEntity(Instant timestamp, UserEntity user, PostEntity post) {
         this.timestamp = timestamp;
         this.user = user;
         this.post = post;

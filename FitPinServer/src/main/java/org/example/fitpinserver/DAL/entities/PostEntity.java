@@ -1,4 +1,4 @@
-package org.example.fitpinserver.domainLayer.entities;
+package org.example.fitpinserver.DAL.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Post {
+@Table(name = "posts")
+public class PostEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -28,11 +29,11 @@ public class Post {
     @JoinColumn(name = "user_id", nullable = false)
     @Getter
     @Setter
-    private User publisher;
+    private UserEntity publisher;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @Getter
-    private List<Comment> comments = new ArrayList<>();
+    private List<CommentEntity> comments = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -41,61 +42,61 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     @Getter
-    private List<Product> products = new ArrayList<>();
+    private List<ProductEntity> products = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @Getter
-    private List<PostLike> postLikes = new ArrayList<>();
+    private List<PostLikeEntity> postLikes = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @Getter
-    private List<Save> saves = new ArrayList<>();
+    private List<SaveEntity> saves = new ArrayList<>();
 
-    public Post() {
+    public PostEntity() {
     }
 
-    public Post(String caption, User publisher, Instant timestamp) {
+    public PostEntity(String caption, UserEntity publisher, Instant timestamp) {
         this.caption = caption;
         this.publisher = publisher;
         this.timestamp = timestamp;
     }
 
-    public void addSave(Save save){
+    public void addSave(SaveEntity save){
         this.saves.add(save);
         save.setPost(this);
     }
 
-    public void removeSave(Save save){
+    public void removeSave(SaveEntity save){
         if(this.saves.remove(save) && save.getPost() == this)
             save.setPost(null);
     }
 
-    public void addPostLike(PostLike postLike){
+    public void addPostLike(PostLikeEntity postLike){
         this.postLikes.add(postLike);
         postLike.setPost(this);
     }
 
-    public void removePostLike(PostLike postLike){
+    public void removePostLike(PostLikeEntity postLike){
         if(this.postLikes.remove(postLike) && postLike.getPost() == this)
             postLike.setPost(null);
     }
 
-    public void addComment(Comment comment){
+    public void addComment(CommentEntity comment){
         this.comments.add(comment);
         comment.setPost(this);
     }
 
-    public void removeComment(Comment comment){
+    public void removeComment(CommentEntity comment){
         if(this.comments.remove(comment) && comment.getPost() == this)
             comment.setPost(null);
     }
 
-    public void addProduct(Product product) {
+    public void addProduct(ProductEntity product) {
         this.products.add(product);
         product.getPosts().add(this);
     }
 
-    public void removeProduct(Product product) {
+    public void removeProduct(ProductEntity product) {
         if (this.products.remove(product)) {
             product.getPosts().remove(this);
         }

@@ -1,7 +1,10 @@
-package org.example.fitpinserver.businessLayer.serviceImplementations;
-import org.example.fitpinserver.businessLayer.services.UserService;
-import org.example.fitpinserver.domainLayer.entities.User;
-import org.example.fitpinserver.dataAccessLayer.repositories.UserRepository;
+package org.example.fitpinserver.business.serviceImplementations;
+import org.example.fitpinserver.DAL.repositories.UserJPARepository;
+import org.example.fitpinserver.DAL.repositories.UserRepositoryImpl;
+import org.example.fitpinserver.business.services.UserService;
+import org.example.fitpinserver.DAL.entities.UserEntity;
+import org.example.fitpinserver.domain.UserRepository;
+import org.example.fitpinserver.domain.models.User;
 import org.springframework.stereotype.Service;
 
 @Service
