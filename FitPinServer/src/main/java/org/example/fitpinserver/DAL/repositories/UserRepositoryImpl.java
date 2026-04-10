@@ -49,6 +49,16 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> findByEmailAddress(String emailAddress) {
+        Optional<UserEntity> userEntity = userJPARepository.findByEmailAddress(emailAddress);
+        if(userEntity.isPresent()){
+            User user = userPersistenceMapper.toDomain(userEntity.get());
+            return Optional.of(user);
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public List<User> findAll() {
         List<UserEntity> usersEntities = userJPARepository.findAll();
         List<User> users = new ArrayList<>();
