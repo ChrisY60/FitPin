@@ -3,16 +3,20 @@ import org.example.fitpinserver.DAL.repositories.UserJPARepository;
 import org.example.fitpinserver.DAL.repositories.UserRepositoryImpl;
 import org.example.fitpinserver.business.services.UserService;
 import org.example.fitpinserver.DAL.entities.UserEntity;
+import org.example.fitpinserver.configuration.PasswordConfig;
 import org.example.fitpinserver.domain.UserRepository;
 import org.example.fitpinserver.domain.models.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -24,8 +28,19 @@ public class UserServiceImpl implements UserService {
         if(userRepository.existsByEmailAddress(user.getEmailAddress()))
             throw new RuntimeException("Email is already in use");
 
-        //I will add password hashing later for now its plain text
-
+        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
         return userRepository.save(user);
+    }
+
+    @Override
+    public User loginUser(String usernameOrEmail, String password) {
+        User user = userRepository.findByUsername(usernameOrEmail).
+                or(() -> userRepository.findByEmailAddress(usernameOrEmail))
+                .orElseThrow(() -> new RuntimeException("Invalid username/email or password"));
+
+        if (!passwordEncoder.matches(password, user.getPasswordHash())) {
+            throw new RuntimeException("Invalid username/email or password");
+        }
+        return user;
     }
 }
