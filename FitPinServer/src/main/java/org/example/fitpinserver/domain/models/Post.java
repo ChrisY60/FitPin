@@ -17,6 +17,10 @@ public class Post {
 
     @Getter
     @Setter
+    private String imageUrl;
+
+    @Getter
+    @Setter
     private Instant timestamp;
 
     @Getter

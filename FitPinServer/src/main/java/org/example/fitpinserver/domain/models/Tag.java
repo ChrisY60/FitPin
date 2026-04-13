@@ -15,6 +15,11 @@ public class Tag {
     @Getter
     private List<Post> posts = new ArrayList<>();
 
+    public Tag(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public void addPost(Post post) {
         this.posts.add(post);
         post.getTags().add(this);
