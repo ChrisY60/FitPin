@@ -30,6 +30,9 @@ public class Post {
     private List<Product> products = new ArrayList<>();
 
     @Getter
+    private List<Tag> tags = new ArrayList<>();
+
+    @Getter
     private List<PostLike> postLikes = new ArrayList<>();
 
     @Getter
@@ -92,6 +95,17 @@ public class Post {
     public void removeProduct(Product product) {
         if (this.products.remove(product)) {
             product.getPosts().remove(this);
+        }
+    }
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+        tag.getPosts().add(this);
+    }
+
+    public void removeTag(Tag tag) {
+        if (this.tags.remove(tag)) {
+            tag.getPosts().remove(this);
         }
     }
 }
