@@ -44,6 +44,15 @@ public class PostEntity {
     @Getter
     private List<ProductEntity> products = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "post_tags",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    @Getter
+    private List<TagEntity> tags = new ArrayList<>();
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @Getter
     private List<PostLikeEntity> postLikes = new ArrayList<>();
@@ -99,6 +108,17 @@ public class PostEntity {
     public void removeProduct(ProductEntity product) {
         if (this.products.remove(product)) {
             product.getPosts().remove(this);
+        }
+    }
+
+    public void addTag(TagEntity tag) {
+        this.tags.add(tag);
+        tag.getPosts().add(this);
+    }
+
+    public void removeTag(TagEntity tag) {
+        if (this.tags.remove(tag)) {
+            tag.getPosts().remove(this);
         }
     }
 
