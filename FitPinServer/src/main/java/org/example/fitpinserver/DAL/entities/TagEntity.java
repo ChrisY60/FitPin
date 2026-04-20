@@ -2,6 +2,7 @@ package org.example.fitpinserver.DAL.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,12 @@ import java.util.List;
 public class TagEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @Getter
+    @Setter
     private String name;
 
     @ManyToMany(mappedBy = "tags")

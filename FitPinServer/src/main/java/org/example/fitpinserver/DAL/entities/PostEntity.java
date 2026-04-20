@@ -23,6 +23,11 @@ public class PostEntity {
     @Getter
     @Setter
     @Column(nullable = false)
+    private String imageUrl;
+
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private Instant timestamp;
 
     @ManyToOne
