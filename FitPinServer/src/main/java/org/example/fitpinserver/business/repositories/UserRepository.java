@@ -1,4 +1,4 @@
-package org.example.fitpinserver.domain.repositories;
+package org.example.fitpinserver.business.repositories;
 
 import org.example.fitpinserver.domain.models.User;
 

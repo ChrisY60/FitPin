@@ -2,7 +2,7 @@ package org.example.fitpinserver.DAL.repositories;
 
 import org.example.fitpinserver.DAL.entities.UserEntity;
 import org.example.fitpinserver.DAL.mappers.UserPersistenceMapper;
-import org.example.fitpinserver.domain.repositories.UserRepository;
+import org.example.fitpinserver.business.repositories.UserRepository;
 import org.example.fitpinserver.domain.models.User;
 import org.springframework.stereotype.Repository;
 

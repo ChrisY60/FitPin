@@ -1,7 +1,7 @@
 package org.example.fitpinserver.services;
 
 import org.example.fitpinserver.business.serviceImplementations.UserServiceImpl;
-import org.example.fitpinserver.domain.repositories.UserRepository;
+import org.example.fitpinserver.business.repositories.UserRepository;
 import org.example.fitpinserver.domain.models.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
