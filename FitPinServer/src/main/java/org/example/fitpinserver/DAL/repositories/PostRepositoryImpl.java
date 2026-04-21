@@ -2,7 +2,7 @@ package org.example.fitpinserver.DAL.repositories;
 
 import org.example.fitpinserver.DAL.mappers.PostPersistenceMapper;
 import org.example.fitpinserver.domain.models.Post;
-import org.example.fitpinserver.domain.repositories.PostRepository;
+import org.example.fitpinserver.business.repositories.PostRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

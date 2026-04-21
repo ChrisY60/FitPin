@@ -44,3 +44,15 @@ jobs:
 
       - name: SonarCloud Analysis
         run: ./gradlew sonar -Dsonar.projectKey=ChrisY60_FitPin -Dsonar.organization=chrisy60 -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+
+  deploy:
+    needs: build-test
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy with Docker Compose
+        run: docker compose up --build -d
+        working-directory: C:\Users\krisy\Desktop\FitPinDeploy

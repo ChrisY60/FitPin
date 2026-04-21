@@ -1,6 +1,6 @@
 package org.example.fitpinserver.business.serviceImplementations;
 import org.example.fitpinserver.business.services.UserService;
-import org.example.fitpinserver.domain.repositories.UserRepository;
+import org.example.fitpinserver.business.repositories.UserRepository;
 import org.example.fitpinserver.domain.models.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
