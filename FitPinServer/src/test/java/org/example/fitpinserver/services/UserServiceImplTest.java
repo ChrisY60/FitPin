@@ -175,4 +175,62 @@ public class UserServiceImplTest {
         verify(userRepository).findByUsername("chris");
         verify(passwordEncoder).matches("wrongPassword", "hashed123");
     }
+
+    @Test
+    void getUserByUsername_Should_Return_User_When_Username_Exists() {
+        User user = new User(1L, "chris", "chris@gmail.com", null, "hashed123");
+        when(userRepository.findByUsername("chris")).thenReturn(Optional.of(user));
+
+        User result = userService.getUserByUsername("chris");
+
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        assertEquals("chris", result.getUsername());
+        verify(userRepository).findByUsername("chris");
+    }
+
+    @Test
+    void getUserByUsername_Should_Throw_RuntimeException_When_Username_Does_Not_Exist() {
+        when(userRepository.findByUsername("nobody")).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> userService.getUserByUsername("nobody")
+        );
+
+        assertEquals("User not found", exception.getMessage());
+        verify(userRepository).findByUsername("nobody");
+    }
+
+    @Test
+    void updateProfile_Should_Return_Updated_User_When_User_Exists() {
+        User existingUser = new User(1L, "chris", "chris@gmail.com", "old bio", "hashed123");
+        User updatedUser = new User(1L, "chris", "chris@gmail.com", "new bio", "hashed123");
+        updatedUser.setProfilePictureUrl("https://example.com/pic.jpg");
+
+        when(userRepository.findByUsername("chris")).thenReturn(Optional.of(existingUser));
+        when(userRepository.updateProfile(1L, "new bio", "https://example.com/pic.jpg")).thenReturn(updatedUser);
+
+        User result = userService.updateProfile("chris", "new bio", "https://example.com/pic.jpg");
+
+        assertNotNull(result);
+        assertEquals("new bio", result.getBio());
+        assertEquals("https://example.com/pic.jpg", result.getProfilePictureUrl());
+        verify(userRepository).findByUsername("chris");
+        verify(userRepository).updateProfile(1L, "new bio", "https://example.com/pic.jpg");
+    }
+
+    @Test
+    void updateProfile_Should_Throw_RuntimeException_When_User_Does_Not_Exist() {
+        when(userRepository.findByUsername("nobody")).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> userService.updateProfile("nobody", "bio", "pic.jpg")
+        );
+
+        assertEquals("User not found", exception.getMessage());
+        verify(userRepository).findByUsername("nobody");
+        verify(userRepository, never()).updateProfile(any(), any(), any());
+    }
 }
