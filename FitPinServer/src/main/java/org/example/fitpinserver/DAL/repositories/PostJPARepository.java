@@ -4,4 +4,5 @@ import org.example.fitpinserver.DAL.entities.PostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostJPARepository extends JpaRepository<PostEntity, Long> {
+    java.util.List<PostEntity> findByPublisher_Username(String username);
 }

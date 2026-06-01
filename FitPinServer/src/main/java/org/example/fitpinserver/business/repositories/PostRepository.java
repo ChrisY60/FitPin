@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PostRepository {
     List<Post> findAll();
+    List<Post> findByPublisherUsername(String username);
+    Post save(Post post);
 }

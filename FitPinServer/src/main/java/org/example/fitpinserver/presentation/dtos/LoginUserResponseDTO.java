@@ -9,4 +9,5 @@ public class LoginUserResponseDTO {
     private final String token;
     private final Long userId;
     private final String username;
+    private final String profilePictureUrl;
 }

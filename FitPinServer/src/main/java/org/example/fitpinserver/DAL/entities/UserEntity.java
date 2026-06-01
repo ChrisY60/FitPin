@@ -35,6 +35,11 @@ public class UserEntity {
     @Column(nullable = false)
     private String passwordHash;
 
+    @Setter
+    @Getter
+    @Column
+    private String profilePictureUrl;
+
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
     @Getter
     private List<PostEntity> posts = new ArrayList<>();

@@ -82,4 +82,13 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean existsByEmailAddress(String emailAddress) {
         return userJPARepository.existsByEmailAddress(emailAddress);
     }
+
+    @Override
+    public User updateProfile(Long userId, String bio, String profilePictureUrl) {
+        UserEntity entity = userJPARepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        entity.setBio(bio);
+        entity.setProfilePictureUrl(profilePictureUrl);
+        return userPersistenceMapper.toDomain(userJPARepository.save(entity));
+    }
 }

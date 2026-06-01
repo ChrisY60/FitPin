@@ -9,10 +9,13 @@ import java.util.List;
 public class Product {
     @Getter
     private Long id;
-    //add image url later on
     @Getter
     @Setter
     private String name;
+
+    @Getter
+    @Setter
+    private String imageUrl;
 
     @Getter
     @Setter

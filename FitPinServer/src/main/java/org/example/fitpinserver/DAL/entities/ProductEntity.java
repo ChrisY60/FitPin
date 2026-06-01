@@ -20,6 +20,11 @@ public class ProductEntity {
     @Column(nullable = false)
     private String name;
 
+    @Setter
+    @Getter
+    @Column
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "brand_id")
     @Getter

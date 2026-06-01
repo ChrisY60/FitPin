@@ -11,6 +11,7 @@ import java.util.List;
 public class PostResponseDTO {
     private Long id;
     private String publisherUsername;
+    private String publisherProfilePictureUrl;
     private Instant timestamp;
     private String imageUrl;
     private String caption;

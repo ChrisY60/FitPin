@@ -12,13 +12,15 @@ public class UserPersistenceMapper {
             return null;
         }
 
-        return new User(
+        User user = new User(
                 entity.getId(),
                 entity.getUsername(),
                 entity.getEmailAddress(),
                 entity.getBio(),
                 entity.getPasswordHash()
         );
+        user.setProfilePictureUrl(entity.getProfilePictureUrl());
+        return user;
     }
 
     public UserEntity toEntity(User domain) {

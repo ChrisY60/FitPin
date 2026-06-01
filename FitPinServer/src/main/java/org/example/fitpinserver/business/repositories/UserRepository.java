@@ -14,4 +14,5 @@ public interface UserRepository {
     void deleteById(Long id);
     boolean existsByUsername(String username);
     boolean existsByEmailAddress(String emailAddress);
+    User updateProfile(Long userId, String bio, String profilePictureUrl);
 }

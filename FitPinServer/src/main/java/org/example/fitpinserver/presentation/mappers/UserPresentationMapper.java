@@ -17,7 +17,8 @@ public class UserPresentationMapper {
         return new LoginUserResponseDTO(
                 token,
                 user.getId(),
-                user.getUsername()
+                user.getUsername(),
+                user.getProfilePictureUrl()
         );
     }
 

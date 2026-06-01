@@ -27,6 +27,10 @@ public class User {
     private String passwordHash;
 
     @Getter
+    @Setter
+    private String profilePictureUrl;
+
+    @Getter
     private List<Post> posts = new ArrayList<>();
 
     @Getter

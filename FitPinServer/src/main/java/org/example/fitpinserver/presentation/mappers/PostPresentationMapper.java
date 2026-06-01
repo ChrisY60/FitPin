@@ -21,13 +21,15 @@ public class PostPresentationMapper {
                 .map(product -> new ProductDTO(
                         product.getId(),
                         product.getName(),
-                        new BrandDTO(product.getBrand().getId(), product.getBrand().getName())
+                        new BrandDTO(product.getBrand().getId(), product.getBrand().getName()),
+                        product.getImageUrl()
                 ))
                 .toList();
 
         return new PostResponseDTO(
                 post.getId(),
                 post.getPublisher().getUsername(),
+                post.getPublisher().getProfilePictureUrl(),
                 post.getTimestamp(),
                 post.getImageUrl(),
                 post.getCaption(),

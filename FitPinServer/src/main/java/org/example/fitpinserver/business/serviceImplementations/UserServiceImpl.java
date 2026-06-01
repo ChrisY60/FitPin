@@ -39,4 +39,17 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @Override
+    public User updateProfile(String username, String bio, String profilePictureUrl) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.updateProfile(user.getId(), bio, profilePictureUrl);
+    }
 }

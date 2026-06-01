@@ -5,9 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ProductDTO {
+public class UserProfileResponseDTO {
     private Long id;
-    private String name;
-    private BrandDTO brand;
-    private String imageUrl;
+    private String username;
+    private String bio;
+    private String profilePictureUrl;
+    private int postCount;
 }

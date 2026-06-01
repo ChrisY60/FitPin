@@ -29,6 +29,7 @@ public class PostPersistenceMapper {
                 publisher.getBio(),
                 publisher.getPasswordHash()
         );
+        publisherDomain.setProfilePictureUrl(publisher.getProfilePictureUrl());
 
         Post post = new Post(entity.getId(), entity.getCaption(), entity.getTimestamp(), publisherDomain);
         post.setImageUrl(entity.getImageUrl());
@@ -46,5 +47,11 @@ public class PostPersistenceMapper {
         entity.getComments().forEach(comment -> post.getComments().add(new Comment()));
 
         return post;
+    }
+
+    public PostEntity toEntity(Post post, UserEntity publisher) {
+        PostEntity entity = new PostEntity(post.getCaption(), publisher, post.getTimestamp());
+        entity.setImageUrl(post.getImageUrl());
+        return entity;
     }
 }
