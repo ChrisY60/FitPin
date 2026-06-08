@@ -4,6 +4,7 @@ import org.example.fitpinserver.business.repositories.CommentRepository;
 import org.example.fitpinserver.business.repositories.PostRepository;
 import org.example.fitpinserver.business.repositories.UserRepository;
 import org.example.fitpinserver.business.services.CommentService;
+import org.example.fitpinserver.business.services.NotificationService;
 import org.example.fitpinserver.domain.models.Comment;
 import org.example.fitpinserver.domain.models.Post;
 import org.example.fitpinserver.domain.models.User;
@@ -19,11 +20,14 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
-    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository,
+                              NotificationService notificationService) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -44,7 +48,9 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
         Comment comment = new Comment(content.trim(), Instant.now(), author, post);
-        return commentRepository.save(comment);
+        Comment saved = commentRepository.save(comment);
+        notificationService.notifyPostCommented(comment);
+        return saved;
     }
 
     @Override

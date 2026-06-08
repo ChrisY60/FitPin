@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/posts/*/likes").authenticated()
                         .requestMatchers(HttpMethod.POST, "/posts/*/comments").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/posts/*/comments/*").authenticated()
+                        .requestMatchers("/notifications/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

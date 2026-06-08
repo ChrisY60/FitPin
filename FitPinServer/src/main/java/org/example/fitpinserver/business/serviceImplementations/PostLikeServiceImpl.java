@@ -3,6 +3,7 @@ package org.example.fitpinserver.business.serviceImplementations;
 import org.example.fitpinserver.business.repositories.PostLikeRepository;
 import org.example.fitpinserver.business.repositories.PostRepository;
 import org.example.fitpinserver.business.repositories.UserRepository;
+import org.example.fitpinserver.business.services.NotificationService;
 import org.example.fitpinserver.business.services.PostLikeService;
 import org.example.fitpinserver.domain.models.Post;
 import org.example.fitpinserver.domain.models.PostLike;
@@ -20,11 +21,14 @@ public class PostLikeServiceImpl implements PostLikeService {
     private final PostLikeRepository postLikeRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
-    public PostLikeServiceImpl(PostLikeRepository postLikeRepository, PostRepository postRepository, UserRepository userRepository) {
+    public PostLikeServiceImpl(PostLikeRepository postLikeRepository, PostRepository postRepository, UserRepository userRepository,
+                               NotificationService notificationService) {
         this.postLikeRepository = postLikeRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -39,7 +43,9 @@ public class PostLikeServiceImpl implements PostLikeService {
             throw new RuntimeException("Post already liked");
         }
 
-        postLikeRepository.save(new PostLike(Instant.now(), user, post));
+        PostLike like = new PostLike(Instant.now(), user, post);
+        postLikeRepository.save(like);
+        notificationService.notifyPostLiked(like);
         return post.getPostLikes().size() + 1;
     }
 
