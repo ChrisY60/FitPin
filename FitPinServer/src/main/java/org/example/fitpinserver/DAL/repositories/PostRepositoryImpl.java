@@ -12,6 +12,7 @@ import org.example.fitpinserver.business.repositories.PostRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -44,6 +45,11 @@ public class PostRepositoryImpl implements PostRepository {
         return postJPARepository.findByPublisher_Username(username).stream()
                 .map(postPersistenceMapper::toDomain)
                 .toList();
+    }
+
+    @Override
+    public Optional<Post> findById(Long id) {
+        return postJPARepository.findById(id).map(postPersistenceMapper::toDomain);
     }
 
     @Override

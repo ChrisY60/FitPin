@@ -17,6 +17,7 @@ public class PostResponseDTO {
     private String caption;
     private int likeCount;
     private int commentCount;
+    private boolean likedByCurrentUser;
     private List<TagDTO> tags;
     private List<ProductDTO> products;
 }

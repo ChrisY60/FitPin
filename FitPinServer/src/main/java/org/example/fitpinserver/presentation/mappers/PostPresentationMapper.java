@@ -12,7 +12,7 @@ import java.util.List;
 @Component
 public class PostPresentationMapper {
 
-    public PostResponseDTO toPostResponseDTO(Post post) {
+    public PostResponseDTO toPostResponseDTO(Post post, boolean likedByCurrentUser) {
         List<TagDTO> tags = post.getTags().stream()
                 .map(tag -> new TagDTO(tag.getId(), tag.getName()))
                 .toList();
@@ -35,6 +35,7 @@ public class PostPresentationMapper {
                 post.getCaption(),
                 post.getPostLikes().size(),
                 post.getComments().size(),
+                likedByCurrentUser,
                 tags,
                 products
         );

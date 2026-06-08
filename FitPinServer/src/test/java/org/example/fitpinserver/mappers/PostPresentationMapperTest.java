@@ -33,7 +33,7 @@ class PostPresentationMapperTest {
         post.getComments().add(new Comment());
         post.getComments().add(new Comment());
 
-        PostResponseDTO result = mapper.toPostResponseDTO(post);
+        PostResponseDTO result = mapper.toPostResponseDTO(post, true);
 
         assertEquals(10L, result.getId());
         assertEquals("alice", result.getPublisherUsername());
@@ -42,6 +42,7 @@ class PostPresentationMapperTest {
         assertEquals("nice outfit", result.getCaption());
         assertEquals(3, result.getLikeCount());
         assertEquals(2, result.getCommentCount());
+        assertTrue(result.isLikedByCurrentUser());
 
         assertEquals(2, result.getTags().size());
         assertEquals(1L, result.getTags().get(0).getId());
@@ -62,10 +63,11 @@ class PostPresentationMapperTest {
         Post post = new Post(5L, "caption", Instant.now(), publisher);
         post.setImageUrl("https://example.com/img.jpg");
 
-        PostResponseDTO result = mapper.toPostResponseDTO(post);
+        PostResponseDTO result = mapper.toPostResponseDTO(post, false);
 
         assertEquals(0, result.getLikeCount());
         assertEquals(0, result.getCommentCount());
+        assertFalse(result.isLikedByCurrentUser());
         assertTrue(result.getTags().isEmpty());
         assertTrue(result.getProducts().isEmpty());
     }

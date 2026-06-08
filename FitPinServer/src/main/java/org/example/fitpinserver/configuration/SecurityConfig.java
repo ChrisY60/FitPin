@@ -29,6 +29,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/posts").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/users/me").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/posts/*/likes").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/posts/*/likes").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/posts/*/comments").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/posts/*/comments/*").authenticated()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
