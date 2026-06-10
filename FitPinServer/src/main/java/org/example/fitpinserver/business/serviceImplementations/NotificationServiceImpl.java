@@ -84,6 +84,12 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional
+    public void markAsRead(Long notificationId, Long userId) {
+        notificationRepository.markAsRead(notificationId, userId);
+    }
+
+    @Override
+    @Transactional
     public void markAllAsRead(Long userId, String username) {
         notificationRepository.markAllAsRead(userId);
         messagingTemplate.convertAndSendToUser(username, "/queue/notifications", Map.of("count", 0));

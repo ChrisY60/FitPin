@@ -37,6 +37,12 @@ public class NotificationController {
         return Map.of("count", notificationService.getUnreadCount(userId));
     }
 
+    @PutMapping("/{notificationId}/read")
+    public void markAsRead(@PathVariable Long notificationId) {
+        Long userId = getCurrentUserId();
+        notificationService.markAsRead(notificationId, userId);
+    }
+
     @PutMapping("/read-all")
     public void markAllAsRead() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

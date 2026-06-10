@@ -58,6 +58,14 @@ public class NotificationRepositoryImpl implements NotificationRepository {
     }
 
     @Override
+    public void markAsRead(Long id, Long recipientId) {
+        NotificationEntity entity = notificationJPARepository.findByIdAndRecipient_Id(id, recipientId)
+                .orElseThrow(() -> new RuntimeException("Notification not found"));
+        entity.setRead(true);
+        notificationJPARepository.save(entity);
+    }
+
+    @Override
     public void markAllAsRead(Long recipientId) {
         List<NotificationEntity> entities = notificationJPARepository.findByRecipient_IdOrderByTimestampDesc(recipientId);
         entities.forEach(entity -> entity.setRead(true));
