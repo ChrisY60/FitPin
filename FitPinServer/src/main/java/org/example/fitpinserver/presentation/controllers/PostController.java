@@ -59,6 +59,13 @@ public class PostController {
         return postPresentationMapper.toPostResponseDTO(post, false);
     }
 
+    @DeleteMapping("/{postId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePost(@PathVariable Long postId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        postService.deletePost(username, postId);
+    }
+
     @PostMapping("/{postId}/likes")
     @ResponseStatus(HttpStatus.CREATED)
     public PostLikeResponseDTO likePost(@PathVariable Long postId) {

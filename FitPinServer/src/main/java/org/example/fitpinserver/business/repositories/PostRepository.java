@@ -10,4 +10,5 @@ public interface PostRepository {
     List<Post> findByPublisherUsername(String username);
     Optional<Post> findById(Long id);
     Post save(Post post);
+    void deleteById(Long id);
 }

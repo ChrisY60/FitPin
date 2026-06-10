@@ -76,4 +76,9 @@ public class PostRepositoryImpl implements PostRepository {
 
         return postPersistenceMapper.toDomain(postJPARepository.save(entity));
     }
+
+    @Override
+    public void deleteById(Long id) {
+        postJPARepository.deleteById(id);
+    }
 }

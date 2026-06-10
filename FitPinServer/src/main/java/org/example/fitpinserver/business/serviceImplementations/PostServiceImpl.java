@@ -1,5 +1,6 @@
 package org.example.fitpinserver.business.serviceImplementations;
 
+import org.example.fitpinserver.business.repositories.NotificationRepository;
 import org.example.fitpinserver.business.repositories.ProductRepository;
 import org.example.fitpinserver.business.repositories.UserRepository;
 import org.example.fitpinserver.business.services.PostService;
@@ -19,11 +20,14 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final NotificationRepository notificationRepository;
 
-    public PostServiceImpl(PostRepository postRepository, UserRepository userRepository, ProductRepository productRepository) {
+    public PostServiceImpl(PostRepository postRepository, UserRepository userRepository, ProductRepository productRepository,
+                            NotificationRepository notificationRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     @Override
@@ -54,5 +58,19 @@ public class PostServiceImpl implements PostService {
                 .forEach(name -> post.getTags().add(new Tag(null, name)));
 
         return postRepository.save(post);
+    }
+
+    @Override
+    @Transactional
+    public void deletePost(String username, Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        if (!post.getPublisher().getUsername().equals(username)) {
+            throw new RuntimeException("You can only delete your own posts");
+        }
+
+        notificationRepository.deleteByPostId(postId);
+        postRepository.deleteById(postId);
     }
 }

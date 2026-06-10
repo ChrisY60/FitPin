@@ -7,19 +7,24 @@ import org.example.fitpinserver.domain.models.Comment;
 import org.example.fitpinserver.domain.models.Notification;
 import org.example.fitpinserver.domain.models.PostLike;
 import org.example.fitpinserver.domain.models.User;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
-    public NotificationServiceImpl(NotificationRepository notificationRepository) {
+    public NotificationServiceImpl(NotificationRepository notificationRepository,
+                                   SimpMessagingTemplate messagingTemplate) {
         this.notificationRepository = notificationRepository;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @Override
@@ -37,6 +42,7 @@ public class NotificationServiceImpl implements NotificationService {
                 like.getUser(),
                 like.getPost()
         ));
+        pushUnreadCount(recipient);
     }
 
     @Override
@@ -54,6 +60,16 @@ public class NotificationServiceImpl implements NotificationService {
                 comment.getAuthor(),
                 comment.getPost()
         ));
+        pushUnreadCount(recipient);
+    }
+
+    private void pushUnreadCount(User recipient) {
+        long count = notificationRepository.countUnreadByRecipientId(recipient.getId());
+        messagingTemplate.convertAndSendToUser(
+                recipient.getUsername(),
+                "/queue/notifications",
+                Map.of("count", count)
+        );
     }
 
     @Override
@@ -68,13 +84,8 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional
-    public void markAsRead(Long notificationId, Long userId) {
-        notificationRepository.markAsRead(notificationId, userId);
-    }
-
-    @Override
-    @Transactional
-    public void markAllAsRead(Long userId) {
+    public void markAllAsRead(Long userId, String username) {
         notificationRepository.markAllAsRead(userId);
+        messagingTemplate.convertAndSendToUser(username, "/queue/notifications", Map.of("count", 0));
     }
 }

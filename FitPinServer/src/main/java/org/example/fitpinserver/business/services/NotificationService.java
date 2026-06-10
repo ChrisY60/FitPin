@@ -9,6 +9,5 @@ public interface NotificationService {
     void notifyPostCommented(Comment comment);
     List<Notification> getNotificationsForUser(Long userId);
     long getUnreadCount(Long userId);
-    void markAsRead(Long notificationId, Long userId);
-    void markAllAsRead(Long userId);
+    void markAllAsRead(Long userId, String username);
 }

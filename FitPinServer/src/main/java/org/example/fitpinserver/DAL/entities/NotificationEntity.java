@@ -28,7 +28,7 @@ public class NotificationEntity {
 
     @Getter
     @Setter
-    @Column(nullable = false)
+    @Column(name = "is_read", nullable = false)
     private boolean read;
 
     @ManyToOne
