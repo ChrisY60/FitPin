@@ -11,9 +11,6 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.util.Map;
 
-// This runs once when a browser tries to open a WebSocket connection.
-// Think of it as the "bouncer" — it checks the JWT cookie and writes
-// the username into the connection's attributes so we can use it later.
 @Component
 public class JwtHandshakeInterceptor implements HandshakeInterceptor {
 
