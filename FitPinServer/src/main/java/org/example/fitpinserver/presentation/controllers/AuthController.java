@@ -23,12 +23,16 @@ public class AuthController {
     private final UserPresentationMapper userPresentationMapper;
     private final JwtService jwtService;
     private final long jwtExpirationMs;
+    private final boolean secureCookies;
 
-    public AuthController(UserService userService, UserPresentationMapper userPresentationMapper, JwtService jwtService, @Value("${security.jwt.expiration-ms}") long jwtExpirationMs) {
+    public AuthController(UserService userService, UserPresentationMapper userPresentationMapper, JwtService jwtService,
+                           @Value("${security.jwt.expiration-ms}") long jwtExpirationMs,
+                           @Value("${security.cookie.secure:true}") boolean secureCookies) {
         this.userService = userService;
         this.userPresentationMapper = userPresentationMapper;
         this.jwtService = jwtService;
         this.jwtExpirationMs = jwtExpirationMs;
+        this.secureCookies = secureCookies;
     }
 
     @PostMapping("/register")
@@ -44,7 +48,7 @@ public class AuthController {
         String token = jwtService.generateToken(loggedInUser);
         ResponseCookie cookie = ResponseCookie.from("token", token)
                 .httpOnly(true)
-                .secure(false)
+                .secure(secureCookies)
                 .sameSite("Strict")
                 .path("/")
                 .maxAge(Duration.ofMillis(jwtExpirationMs))
@@ -57,7 +61,7 @@ public class AuthController {
     public void logout(HttpServletResponse response) {
         ResponseCookie cookie = ResponseCookie.from("token", "")
                 .httpOnly(true)
-                .secure(false)
+                .secure(secureCookies)
                 .sameSite("Strict")
                 .path("/")
                 .maxAge(0)
