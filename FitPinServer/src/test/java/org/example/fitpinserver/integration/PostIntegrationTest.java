@@ -95,7 +95,9 @@ class PostIntegrationTest {
 
     @Test
     void getAllPosts_NoPosts_ReturnsEmptyList() throws Exception {
-        mockMvc.perform(get("/posts"))
+        Cookie cookie = loginAndGetCookie("chris", "chris@example.com", "password123");
+
+        mockMvc.perform(get("/posts").cookie(cookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(0));
@@ -146,7 +148,7 @@ class PostIntegrationTest {
         Cookie cookie = loginAndGetCookie("chris", "chris@example.com", "password123");
         createPost(cookie, "My outfit today", "http://example.com/image.jpg");
 
-        mockMvc.perform(get("/posts"))
+        mockMvc.perform(get("/posts").cookie(cookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(jsonPath("$[0].publisherUsername").value("chris"))
@@ -162,7 +164,7 @@ class PostIntegrationTest {
                         .cookie(cookie))
                 .andExpect(status().isNoContent());
 
-        mockMvc.perform(get("/posts"))
+        mockMvc.perform(get("/posts").cookie(cookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(0));
     }
@@ -266,7 +268,7 @@ class PostIntegrationTest {
                                 """))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(get("/posts/" + postId + "/comments"))
+        mockMvc.perform(get("/posts/" + postId + "/comments").cookie(commenterCookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(jsonPath("$[0].content").value("Love this outfit!"))
@@ -323,7 +325,7 @@ class PostIntegrationTest {
                         .cookie(commenterCookie))
                 .andExpect(status().isNoContent());
 
-        mockMvc.perform(get("/posts/" + postId + "/comments"))
+        mockMvc.perform(get("/posts/" + postId + "/comments").cookie(commenterCookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(0));
     }

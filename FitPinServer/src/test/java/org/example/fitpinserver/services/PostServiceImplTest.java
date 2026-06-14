@@ -113,6 +113,8 @@ class PostServiceImplTest {
         assertEquals("my caption", captured.getCaption());
         assertEquals("https://img.jpg", captured.getImageUrl());
         assertEquals(1, captured.getProducts().size());
+        assertEquals(2L, captured.getProducts().get(0).getId());
+        assertEquals("Shirt", captured.getProducts().get(0).getName());
         assertEquals(1, captured.getTags().size());
         assertEquals("fashion", captured.getTags().get(0).getName());
     }

@@ -27,14 +27,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/posts").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/users/me").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/posts/*/likes").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/posts/*/likes").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/posts/*/comments").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/posts/*/comments/*").authenticated()
-                        .requestMatchers("/notifications/**").authenticated()
-                        .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

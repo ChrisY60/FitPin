@@ -71,9 +71,9 @@ class UserIntegrationTest {
 
     @Test
     void getUserProfile_ExistingUser_ReturnsProfile() throws Exception {
-        loginAndGetCookie("chris", "chris@example.com", "password123");
+        Cookie cookie = loginAndGetCookie("chris", "chris@example.com", "password123");
 
-        mockMvc.perform(get("/users/chris"))
+        mockMvc.perform(get("/users/chris").cookie(cookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("chris"))
                 .andExpect(jsonPath("$.id").isNumber())
@@ -82,16 +82,18 @@ class UserIntegrationTest {
 
     @Test
     void getUserProfile_NonExistentUser_Returns400() throws Exception {
-        mockMvc.perform(get("/users/nobody"))
+        Cookie cookie = loginAndGetCookie("chris", "chris@example.com", "password123");
+
+        mockMvc.perform(get("/users/nobody").cookie(cookie))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("User not found"));
     }
 
     @Test
     void getUserPosts_NoPosts_ReturnsEmptyList() throws Exception {
-        loginAndGetCookie("chris", "chris@example.com", "password123");
+        Cookie cookie = loginAndGetCookie("chris", "chris@example.com", "password123");
 
-        mockMvc.perform(get("/users/chris/posts"))
+        mockMvc.perform(get("/users/chris/posts").cookie(cookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(0));
@@ -114,7 +116,7 @@ class UserIntegrationTest {
                                 """))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(get("/users/chris/posts"))
+        mockMvc.perform(get("/users/chris/posts").cookie(cookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(jsonPath("$[0].publisherUsername").value("chris"));
