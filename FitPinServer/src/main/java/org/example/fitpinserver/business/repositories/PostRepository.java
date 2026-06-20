@@ -11,4 +11,7 @@ public interface PostRepository {
     Optional<Post> findById(Long id);
     Post save(Post post);
     void deleteById(Long id);
+    List<Post> findByProductId(Long productId);
+    List<Post> findByBrandId(Long brandId);
+    List<Post> findByTagId(Long tagId);
 }

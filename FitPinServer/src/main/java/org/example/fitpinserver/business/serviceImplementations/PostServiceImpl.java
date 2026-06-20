@@ -61,6 +61,21 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<Post> getPostsByProductId(Long productId) {
+        return postRepository.findByProductId(productId);
+    }
+
+    @Override
+    public List<Post> getPostsByBrandId(Long brandId) {
+        return postRepository.findByBrandId(brandId);
+    }
+
+    @Override
+    public List<Post> getPostsByTagId(Long tagId) {
+        return postRepository.findByTagId(tagId);
+    }
+
+    @Override
     @Transactional
     public void deletePost(String username, Long postId) {
         Post post = postRepository.findById(postId)

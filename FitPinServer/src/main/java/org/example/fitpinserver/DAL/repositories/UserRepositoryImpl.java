@@ -91,4 +91,14 @@ public class UserRepositoryImpl implements UserRepository {
         entity.setProfilePictureUrl(profilePictureUrl);
         return userPersistenceMapper.toDomain(userJPARepository.save(entity));
     }
+
+    @Override
+    public List<User> searchByUsername(String query) {
+        List<UserEntity> userEntities = userJPARepository.findByUsernameContainingIgnoreCase(query);
+        List<User> users = new ArrayList<>();
+        for (UserEntity userEntity : userEntities) {
+            users.add(userPersistenceMapper.toDomain(userEntity));
+        }
+        return users;
+    }
 }

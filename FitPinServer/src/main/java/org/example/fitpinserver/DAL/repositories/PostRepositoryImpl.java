@@ -81,4 +81,25 @@ public class PostRepositoryImpl implements PostRepository {
     public void deleteById(Long id) {
         postJPARepository.deleteById(id);
     }
+
+    @Override
+    public List<Post> findByProductId(Long productId) {
+        return postJPARepository.findByProducts_Id(productId).stream()
+                .map(postPersistenceMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Post> findByBrandId(Long brandId) {
+        return postJPARepository.findByProducts_Brand_Id(brandId).stream()
+                .map(postPersistenceMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public List<Post> findByTagId(Long tagId) {
+        return postJPARepository.findByTags_Id(tagId).stream()
+                .map(postPersistenceMapper::toDomain)
+                .toList();
+    }
 }

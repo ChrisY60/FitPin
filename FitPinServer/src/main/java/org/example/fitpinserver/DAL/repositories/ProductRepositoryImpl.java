@@ -32,4 +32,11 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .map(productPersistenceMapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public List<Product> searchByName(String query) {
+        return productJPARepository.findByNameContainingIgnoreCase(query).stream()
+                .map(productPersistenceMapper::toDomain)
+                .toList();
+    }
 }

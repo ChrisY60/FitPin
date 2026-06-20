@@ -15,4 +15,5 @@ public interface UserRepository {
     boolean existsByUsername(String username);
     boolean existsByEmailAddress(String emailAddress);
     User updateProfile(Long userId, String bio, String profilePictureUrl);
+    List<User> searchByUsername(String query);
 }

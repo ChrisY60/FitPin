@@ -7,4 +7,5 @@ import java.util.List;
 public interface ProductRepository {
     List<Product> findAll();
     List<Product> findAllByIds(List<Long> ids);
+    List<Product> searchByName(String query);
 }
