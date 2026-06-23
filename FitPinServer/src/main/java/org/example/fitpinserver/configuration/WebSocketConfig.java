@@ -1,5 +1,6 @@
 package org.example.fitpinserver.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -10,6 +11,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -17,6 +19,9 @@ import java.util.Map;
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     private final JwtHandshakeInterceptor jwtHandshakeInterceptor;
+
+    @Value("${app.cors.allowed-origins}")
+    private List<String> allowedOrigins;
 
     public WebSocketConfig(JwtHandshakeInterceptor jwtHandshakeInterceptor) {
         this.jwtHandshakeInterceptor = jwtHandshakeInterceptor;
@@ -31,7 +36,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("http://localhost:5173", "http://localhost", "https://localhost")
+                .setAllowedOrigins(allowedOrigins.toArray(new String[0]))
                 .addInterceptors(jwtHandshakeInterceptor)
                 .setHandshakeHandler(new PrincipalHandshakeHandler());
     }

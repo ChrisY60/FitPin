@@ -18,14 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
-/**
- * Products and brands have no write path through the application (they're seeded
- * directly into MySQL), so this is the only way to (re)populate their Elasticsearch
- * indices. Set APP_SEARCH_REINDEX_ON_STARTUP=true for one run, then unset it.
- * Index creation is deliberately not eager (see createIndex=false on the @Document
- * classes) so the app can start without a reachable Elasticsearch cluster; this runner
- * creates each index with its mapping on demand instead.
- */
+
 @Component
 public class SearchBackfillRunner implements ApplicationRunner {
 

@@ -1,6 +1,6 @@
 package org.example.fitpinserver.DAL.repositories;
 
-import org.example.fitpinserver.DAL.elasticsearch.TagSearchRepository;
+import org.example.fitpinserver.DAL.repositories.elasticsearch.TagSearchRepository;
 import org.example.fitpinserver.DAL.mappers.TagPersistenceMapper;
 import org.example.fitpinserver.business.repositories.TagRepository;
 import org.example.fitpinserver.domain.models.Tag;

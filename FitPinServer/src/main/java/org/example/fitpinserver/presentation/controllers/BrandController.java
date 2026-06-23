@@ -1,15 +1,23 @@
 package org.example.fitpinserver.presentation.controllers;
 
+import org.example.fitpinserver.business.services.BrandService;
 import org.example.fitpinserver.business.services.PostLikeService;
 import org.example.fitpinserver.business.services.PostService;
+import org.example.fitpinserver.domain.models.Brand;
 import org.example.fitpinserver.domain.models.Post;
+import org.example.fitpinserver.presentation.dtos.BrandDTO;
+import org.example.fitpinserver.presentation.dtos.CreateBrandRequestDTO;
 import org.example.fitpinserver.presentation.dtos.PostResponseDTO;
 import org.example.fitpinserver.presentation.mappers.PostPresentationMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,15 +27,31 @@ import java.util.Set;
 @RequestMapping("/brands")
 public class BrandController {
 
+    private final BrandService brandService;
     private final PostService postService;
     private final PostPresentationMapper postPresentationMapper;
     private final PostLikeService postLikeService;
 
-    public BrandController(PostService postService, PostPresentationMapper postPresentationMapper,
+    public BrandController(BrandService brandService, PostService postService, PostPresentationMapper postPresentationMapper,
                            PostLikeService postLikeService) {
+        this.brandService = brandService;
         this.postService = postService;
         this.postPresentationMapper = postPresentationMapper;
         this.postLikeService = postLikeService;
+    }
+
+    @GetMapping
+    public List<BrandDTO> getAllBrands() {
+        return brandService.getAllBrands().stream()
+                .map(brand -> new BrandDTO(brand.getId(), brand.getName()))
+                .toList();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public BrandDTO createBrand(@RequestBody CreateBrandRequestDTO requestDTO) {
+        Brand brand = brandService.createBrand(requestDTO.getName());
+        return new BrandDTO(brand.getId(), brand.getName());
     }
 
     @GetMapping("/{brandId}/posts")

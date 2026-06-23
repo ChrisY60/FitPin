@@ -1,5 +1,6 @@
-package org.example.fitpinserver.DAL.elasticsearch;
+package org.example.fitpinserver.DAL.repositories.elasticsearch;
 
+import org.example.fitpinserver.DAL.elasticsearch.BrandDocument;
 import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 

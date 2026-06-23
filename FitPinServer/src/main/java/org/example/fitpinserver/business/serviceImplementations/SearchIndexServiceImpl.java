@@ -1,13 +1,13 @@
 package org.example.fitpinserver.business.serviceImplementations;
 
 import org.example.fitpinserver.DAL.elasticsearch.BrandDocument;
-import org.example.fitpinserver.DAL.elasticsearch.BrandSearchRepository;
 import org.example.fitpinserver.DAL.elasticsearch.ProductDocument;
-import org.example.fitpinserver.DAL.elasticsearch.ProductSearchRepository;
 import org.example.fitpinserver.DAL.elasticsearch.TagDocument;
-import org.example.fitpinserver.DAL.elasticsearch.TagSearchRepository;
 import org.example.fitpinserver.DAL.elasticsearch.UserDocument;
-import org.example.fitpinserver.DAL.elasticsearch.UserSearchRepository;
+import org.example.fitpinserver.DAL.repositories.elasticsearch.BrandSearchRepository;
+import org.example.fitpinserver.DAL.repositories.elasticsearch.ProductSearchRepository;
+import org.example.fitpinserver.DAL.repositories.elasticsearch.TagSearchRepository;
+import org.example.fitpinserver.DAL.repositories.elasticsearch.UserSearchRepository;
 import org.example.fitpinserver.business.services.SearchIndexService;
 import org.example.fitpinserver.domain.models.Brand;
 import org.example.fitpinserver.domain.models.Product;

@@ -1,7 +1,7 @@
 package org.example.fitpinserver.DAL.repositories;
 
 import org.example.fitpinserver.DAL.elasticsearch.UserDocument;
-import org.example.fitpinserver.DAL.elasticsearch.UserSearchRepository;
+import org.example.fitpinserver.DAL.repositories.elasticsearch.UserSearchRepository;
 import org.example.fitpinserver.DAL.entities.UserEntity;
 import org.example.fitpinserver.DAL.mappers.UserPersistenceMapper;
 import org.example.fitpinserver.business.repositories.UserRepository;

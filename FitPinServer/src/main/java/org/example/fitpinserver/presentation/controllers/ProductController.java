@@ -4,15 +4,21 @@ import org.example.fitpinserver.business.services.PostLikeService;
 import org.example.fitpinserver.business.services.PostService;
 import org.example.fitpinserver.business.services.ProductService;
 import org.example.fitpinserver.domain.models.Post;
+import org.example.fitpinserver.domain.models.Product;
 import org.example.fitpinserver.presentation.dtos.BrandDTO;
+import org.example.fitpinserver.presentation.dtos.CreateProductRequestDTO;
 import org.example.fitpinserver.presentation.dtos.ProductDTO;
 import org.example.fitpinserver.presentation.dtos.PostResponseDTO;
 import org.example.fitpinserver.presentation.mappers.PostPresentationMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -45,6 +51,18 @@ public class ProductController {
                         product.getImageUrl()
                 ))
                 .toList();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductDTO createProduct(@RequestBody CreateProductRequestDTO requestDTO) {
+        Product product = productService.createProduct(requestDTO.getName(), requestDTO.getBrandId(), requestDTO.getImageUrl());
+        return new ProductDTO(
+                product.getId(),
+                product.getName(),
+                new BrandDTO(product.getBrand().getId(), product.getBrand().getName()),
+                product.getImageUrl()
+        );
     }
 
     @GetMapping("/{productId}/posts")
