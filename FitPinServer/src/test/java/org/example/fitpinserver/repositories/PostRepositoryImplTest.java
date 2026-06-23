@@ -3,6 +3,7 @@ package org.example.fitpinserver.repositories;
 import org.example.fitpinserver.DAL.entities.*;
 import org.example.fitpinserver.DAL.mappers.PostPersistenceMapper;
 import org.example.fitpinserver.DAL.repositories.*;
+import org.example.fitpinserver.business.services.SearchIndexService;
 import org.example.fitpinserver.domain.models.Brand;
 import org.example.fitpinserver.domain.models.Post;
 import org.example.fitpinserver.domain.models.Product;
@@ -40,6 +41,9 @@ class PostRepositoryImplTest {
 
     @Mock
     private TagJPARepository tagJPARepository;
+
+    @Mock
+    private SearchIndexService searchIndexService;
 
     @InjectMocks
     private PostRepositoryImpl postRepository;

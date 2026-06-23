@@ -4,6 +4,7 @@ import org.example.fitpinserver.DAL.entities.UserEntity;
 import org.example.fitpinserver.DAL.mappers.UserPersistenceMapper;
 import org.example.fitpinserver.DAL.repositories.UserJPARepository;
 import org.example.fitpinserver.DAL.repositories.UserRepositoryImpl;
+import org.example.fitpinserver.business.services.SearchIndexService;
 import org.example.fitpinserver.domain.models.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +28,9 @@ class UserRepositoryImplTest {
 
     @Mock
     private UserPersistenceMapper userPersistenceMapper;
+
+    @Mock
+    private SearchIndexService searchIndexService;
 
     @InjectMocks
     private UserRepositoryImpl userRepository;

@@ -1,8 +1,11 @@
 package org.example.fitpinserver.DAL.repositories;
 
+import org.example.fitpinserver.DAL.elasticsearch.UserDocument;
+import org.example.fitpinserver.DAL.elasticsearch.UserSearchRepository;
 import org.example.fitpinserver.DAL.entities.UserEntity;
 import org.example.fitpinserver.DAL.mappers.UserPersistenceMapper;
 import org.example.fitpinserver.business.repositories.UserRepository;
+import org.example.fitpinserver.business.services.SearchIndexService;
 import org.example.fitpinserver.domain.models.User;
 import org.springframework.stereotype.Repository;
 
@@ -15,17 +18,24 @@ public class UserRepositoryImpl implements UserRepository {
 
     private final UserJPARepository userJPARepository;
     private final UserPersistenceMapper userPersistenceMapper;
+    private final SearchIndexService searchIndexService;
+    private final UserSearchRepository userSearchRepository;
 
-    public UserRepositoryImpl(UserJPARepository userJPARepository, UserPersistenceMapper userPersistenceMapper) {
+    public UserRepositoryImpl(UserJPARepository userJPARepository, UserPersistenceMapper userPersistenceMapper,
+                              SearchIndexService searchIndexService, UserSearchRepository userSearchRepository) {
         this.userJPARepository = userJPARepository;
         this.userPersistenceMapper = userPersistenceMapper;
+        this.searchIndexService = searchIndexService;
+        this.userSearchRepository = userSearchRepository;
     }
 
     @Override
     public User save(User user) {
         UserEntity userEntity = userPersistenceMapper.toEntity(user);
         UserEntity savedEntity = userJPARepository.save(userEntity);
-        return userPersistenceMapper.toDomain(savedEntity);
+        User savedUser = userPersistenceMapper.toDomain(savedEntity);
+        searchIndexService.indexUser(savedUser);
+        return savedUser;
     }
 
     @Override
@@ -71,6 +81,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void deleteById(Long id) {
         userJPARepository.deleteById(id);
+        searchIndexService.deleteUser(id);
     }
 
     @Override
@@ -89,16 +100,21 @@ public class UserRepositoryImpl implements UserRepository {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         entity.setBio(bio);
         entity.setProfilePictureUrl(profilePictureUrl);
-        return userPersistenceMapper.toDomain(userJPARepository.save(entity));
+        User updatedUser = userPersistenceMapper.toDomain(userJPARepository.save(entity));
+        searchIndexService.indexUser(updatedUser);
+        return updatedUser;
     }
 
     @Override
     public List<User> searchByUsername(String query) {
-        List<UserEntity> userEntities = userJPARepository.findByUsernameContainingIgnoreCase(query);
-        List<User> users = new ArrayList<>();
-        for (UserEntity userEntity : userEntities) {
-            users.add(userPersistenceMapper.toDomain(userEntity));
-        }
-        return users;
+        return userSearchRepository.searchByUsername(query).stream()
+                .map(UserRepositoryImpl::toDomain)
+                .toList();
+    }
+
+    private static User toDomain(UserDocument document) {
+        User user = new User(document.getId(), document.getUsername(), null, null, null);
+        user.setProfilePictureUrl(document.getProfilePictureUrl());
+        return user;
     }
 }

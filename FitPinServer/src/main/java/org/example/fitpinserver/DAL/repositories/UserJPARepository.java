@@ -3,7 +3,6 @@ package org.example.fitpinserver.DAL.repositories;
 import org.example.fitpinserver.DAL.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface UserJPARepository extends JpaRepository<UserEntity, Long> {
@@ -12,5 +11,4 @@ public interface UserJPARepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findById(Long id);
     Optional<UserEntity> findByEmailAddress(String emailAddress);
     Optional<UserEntity> findByUsername(String username);
-    List<UserEntity> findByUsernameContainingIgnoreCase(String username);
 }

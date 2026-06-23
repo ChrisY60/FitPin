@@ -5,6 +5,7 @@ import org.example.fitpinserver.DAL.entities.ProductEntity;
 import org.example.fitpinserver.DAL.entities.TagEntity;
 import org.example.fitpinserver.DAL.entities.UserEntity;
 import org.example.fitpinserver.DAL.mappers.PostPersistenceMapper;
+import org.example.fitpinserver.business.services.SearchIndexService;
 import org.example.fitpinserver.domain.models.Post;
 import org.example.fitpinserver.domain.models.Product;
 import org.example.fitpinserver.domain.models.Tag;
@@ -22,15 +23,17 @@ public class PostRepositoryImpl implements PostRepository {
     private final UserJPARepository userJPARepository;
     private final ProductJPARepository productJPARepository;
     private final TagJPARepository tagJPARepository;
+    private final SearchIndexService searchIndexService;
 
     public PostRepositoryImpl(PostJPARepository postJPARepository, PostPersistenceMapper postPersistenceMapper,
                               UserJPARepository userJPARepository, ProductJPARepository productJPARepository,
-                              TagJPARepository tagJPARepository) {
+                              TagJPARepository tagJPARepository, SearchIndexService searchIndexService) {
         this.postJPARepository = postJPARepository;
         this.postPersistenceMapper = postPersistenceMapper;
         this.userJPARepository = userJPARepository;
         this.productJPARepository = productJPARepository;
         this.tagJPARepository = tagJPARepository;
+        this.searchIndexService = searchIndexService;
     }
 
     @Override
@@ -69,7 +72,9 @@ public class PostRepositoryImpl implements PostRepository {
                     .orElseGet(() -> {
                         TagEntity newTag = new TagEntity();
                         newTag.setName(tag.getName());
-                        return tagJPARepository.save(newTag);
+                        TagEntity savedTag = tagJPARepository.save(newTag);
+                        searchIndexService.indexTag(new Tag(savedTag.getId(), savedTag.getName()));
+                        return savedTag;
                     });
             entity.getTags().add(tagEntity);
         }
